@@ -1,0 +1,714 @@
+#!/mu/bin/perl -w
+
+#----------------------------  FILE INFORMATION  ----------------------------
+#
+# $URL: http://svn/mfg/probe/automation/perlmenu/trunk/languages/en/imenu.i18n $
+# $Rev: 7340 $
+# $Date: 2012-06-06 11:13:47 -0600 (Wed, 06 Jun 2012) $
+# $Author: theintzman $
+#
+#----------------------------  file information  ----------------------------
+
+#-------------------------------  COPYRIGHT   -------------------------------
+#
+# © 2007 Micron Technology, Inc. All Rights Reserved.
+#
+# THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+# MICRON TECHNOLOGY, INC. USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED
+# WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF MICRON TECHNOLOGY, INC.
+#
+#-------------------------------  Copyright   -------------------------------
+
+#------------------------------  EXPORT NOTICE  -----------------------------
+#
+# These commodities, technology, or software were exported from the
+# United States in accordance with the Export Administration Regulations.
+# Diversion contrary to U.S. law is prohibited.
+#
+#------------------------------  export notice  -----------------------------
+
+# Perl and Micron Modules
+use utf8;
+
+package PrbLocale;
+
+%Color = (
+    'warning_fg' => 'black',
+    'warning_bg' => 'yellow3',
+);
+
+%Msg = (
+    'title'            => "Lot Introduction Menu - v$::MENU_VERSION",
+    'operator_number'  => 'Operator Number',
+    'operator_name'    => 'Operator:',
+    'design'           => 'Design:',
+    'step'             => 'Step:',
+    'single_loader'    => 'Lot Information',
+    'front_loader'     => 'Front Cassette',
+    'rear_loader'      => 'Rear Cassette',
+    'copy_from_a'      => 'Copy A->B',
+    'copy_from_b'      => 'Copy B->A',
+    'ok'               => 'OK',
+    'cancel'           => 'Cancel',
+    'next'             => 'Next >>',
+    'previous'         => '<< Previous',
+    'start'            => 'Start',
+    'reprobe',         => 'REPROBE',
+    'job_name'         => 'Job Name',
+    'process_id'       => 'Process ID:',
+    'deviation_type'   => 'Deviation:',
+    'ignore_bsc'       => 'Over-ride Lot Staging System',
+    'override'         => 'Over-ride GeRM',
+    'override_reason'  => 'Select or enter reason for override:',
+    'lot_id'           => 'Lot ID:',
+    'temperature'      => 'Chuck Temperature:',
+    'move_table'       => 'Move Table:',
+    'part_type'        => 'Part Type',
+    'designators'      => 'Lot Designators',
+    'wafer_count'      => 'Wafer Count',
+    'trend_wafers'     => 'Trend Count',
+    'confirm_settings' => 'Please confirm options',
+    'yes'              => 'Yes',
+    'no'               => 'No',
+    'calling_mes',     => 'Obtaining lot information from MES',
+    'calling_mam',     => 'Obtaining lot information from MAM',
+    'calling_pct',     => 'Obtaining probe card information from PCT',
+    'calling_germ',    => 'Obtaining recipe from GeRM',
+    'calling_pattr',   => 'Obtaining lot and wafer information from Probe Tracking Server',
+    'calling_bsc',     => 'Obtaining lot and recipe information from MES Controller',
+    'downloading_job', => 'Obtaining test job from release server',
+    'downloading_mt',  => 'Obtaining move table from release server',
+    'calling_relsrv',  => 'Checking for updates',
+    'wafer_count',     => 'Wafer Count:',
+    'trend_count',     => 'Wafers to Probe (if less than Wafer Count):',
+    'display_carrier', => 'Wafer Carrier',
+    'carrier_title',   => 'Wafer Processing Assignment',
+    'wafer_select',    => 'Assignment',
+    'carrier_count',   => 'Selected Wafer Count',
+    'choose_first',    => 'first',
+    'choose_last',     => 'last',
+    'choose_random',   => 'random',
+    'choose_all',      => 'all',
+    'choose_none',     => 'none',
+    'verify_wafers',   => 'Select \'Wafer Carrier\' to Confirm wafers to probe',
+);
+
+%Error = (
+    'oper_required'    => 'Operator ID is required',
+    'process_required' => 'Process is required',
+    'job_required'     => 'Test Job is required',
+    'reason_required'  => 'Reason for over-ride is required',
+    'germ_job_reqd'    => 'GeRM JOB_NAME not available for currently loaded probe card - contact Engineer responsible for this part',
+    'germ_temp_reqd'   => 'GeRM TEMPERATURE parameter is not available',
+    'lot_required'     => 'At least one Lot ID is required',
+    'germ_parse'       => 'Unable to parse response from GeRM Server',
+    'answer_required'  => 'Please respond to all questions',
+    'override_fail'    => 'Over-ride not allowed unless Prober is in Engineering State',
+    'no_load_ports'    => 'No load ports are available for Lot Introduction',
+    'all_scrapped'     => 'All wafers are scrapped',
+    'only_local_job'   => 'The local job is the only one available',
+    'not_idle'         => 'Unable to update Test Job while Tester is active',
+    'on_hold'          => 'Lot or lots are on hold',
+    'ppd_fail'         => 'PPD Extraction Failed',
+    'illum_cal_fail'   => 'Internal calibration Aborted. Max lux level is below specified threshold limit.',
+    'illum_cal_timeout'=> 'Timed out waiting for illuminator calibration.',
+);
+
+# this hash may be used by the platform specific config file to generate a list
+# of options available for an operator to override the wafer slot selection
+# specified by GeRM and modified by Probe Process State
+# hash key will be used internally and used for resource options
+# hash value will be displayed to user
+# no duplication of keys or values is allowed
+# for this reason the list of options displayed to user may be a subset
+# of this list
+%SlotSelectionOptions = (
+    'DataRework'   => 'DataRework',
+    'Waiting'      => 'Waiting',
+    'DataComplete' => 'DataComplete',
+    'DataAborted'  => 'DataAborted',
+    'Running'      => 'Running',
+    'Processed'    => 'Processed',
+    'Paused'       => 'Paused',
+    'Error'        => 'Error',
+    'Complete'     => 'Complete',
+    'Aborted'      => 'Aborted',
+    'Committed'    => 'SELECTED',
+    'CORE'         => 'CORE',
+    'REL'          => 'REL',
+    'SWR'          => 'SWR',
+);
+
+# hash key will be displayed to user, hash value will be sent to GeRM
+%EngrRequest = (
+    'CORRELATION - FINAL' => 'CORR',
+    'CORRELATION - PREFUSE' => 'RPC',
+    'CORRELATION - HOT SORT' => 'YPC',
+    'CORRELATION - COLD SORT' => 'QPC',
+    'EXPERIMENT'  => 'EXPERIMENT',
+    'NON-PROD'    => 'NON-PROD',
+    'DEBUG'       => 'DEBUG',
+);
+
+# hash key will be displayed to user
+%OverrideReasons = (
+    'Engineering Request'     => 'Engineering Request',
+    'Lot not at correct step' => 'Not at correct step',
+    'Network issue'           => 'Network issue',
+    'Equipment Qualification' => 'Equipment Qualification',
+    'GeRM not setup'          => 'GeRM not setup',
+    'DEBUG'                   => 'DEBUG',
+);
+
+sub et_error {
+    my ($equipId, $message) = @_;
+    return("Error obtaining information for '$equipId' from Equipment Tracking: $message");
+}
+
+sub oper_error {
+    my ($message) = @_;
+    return("Error validating operator: $message");
+}
+
+sub ptrack_error {
+    my ($lotId, $message) = @_;
+    return("Error obtaining information for Lot '$lotId' from Tracking Server: $message");
+}
+
+sub lot_not_in_probe {
+    my ($lotId) = @_;
+    return("Lot '$lotId' not found in Probe Tracking");
+}
+
+sub mes_error {
+    my ($lotId, $message) = @_;
+    return("Error obtaining information for Lot '$lotId' from MES: $message");
+}
+
+sub mam_error {
+    my ($lotId, $message) = @_;
+    return("Error obtaining information for Lot '$lotId' from MAM: $message");
+}
+
+sub germ_error {
+    my ($lotId, $message) = @_;
+    return("Failed to obtain recipe information for Lot '$lotId': $message");
+}
+
+sub germ_param_undef {
+    my ($lotId, $card_config, $equip_id, $param_name) = @_;
+    return("Recipe parameter '$param_name' defined for Lot '$lotId', CardType '$card_config', Equipment '$equip_id' was not defined for all lot/card combinations");
+}
+
+sub germ_param_mismatch {
+    my ($param_name, $param_value_ref, $param_value) = @_;
+    return("Recipe parameter '$param_name' has multiple values: '$param_value_ref', '$param_value'");
+}
+
+sub germ_recipe_hold {
+    my ($lotId, $message) = @_;
+    return("Recipe for Lot '$lotId' is on hold: $message")
+}
+
+sub germ_process_missing {
+    my ($step) = @_;
+    return("GeRM PID parameter is not available for Step '$step'");
+}
+
+sub germ_process_not_valid {
+    my ($process_id) = @_;
+    return("GeRM PID '$process_id' is not a valid Probe Data Collection Process");
+}
+
+sub germ_recipe_not_an_exception {
+    my ($selected_deviation, $germ_engineering_request) = @_;
+    # display what operator selected, and what is passed to GeRM if they differ
+    my $deviation_msg = ($selected_deviation eq $germ_engineering_request) ? $selected_deviation : "$selected_deviation ($germ_engineering_request)";
+    return("No GeRM Deviation was found for '$deviation_msg'.  Please select a different deviation or contact Engineer responsible for this part.");
+}
+
+sub germ_no_matching_exception {
+    my ($exception_name, $deviation) = @_;
+    return("GeRM resolved to '$exception_name', this does not seem to match '$deviation'.  Please select a different deviation or contact Engineer responsible for this part.");
+}
+
+# deprecated in Menu 3.0
+sub process_run_error {
+    my ($lwp_status, $process_ID_cache) = @_;
+    return("Error obtaining Process Run information from Probe IS Middle Layer.  Error='$lwp_status', Cache='$process_ID_cache'");
+}
+
+# deprecated in Menu 3.0
+sub parse_process_run_error {
+    my ($response) = @_;
+    return("Error: Unable to parse Process Run information: $response");
+}
+
+sub no_process_error {
+    my ($step) = @_;
+    return("Error: No Probe Process found for Step '$step'");
+}
+
+# deprecated in Menu 3.0
+sub can_not_update_process_cache {
+    my ($filename) = @_;
+    return("Warning: Could not update Process Run cache file '$filename'");
+}
+
+sub can_not_update_probe_card_cache {
+    my ($filename) = @_;
+    return("Warning: Could not update Probe Card Information cache file '$filename'");
+}
+
+sub pct_error {
+    my ($card_id, $message) = @_;
+    return("Error obtaining information for Card '$card_id' from PCT: $message");
+}
+
+sub incorrect_card_id {
+    my ($actual_card_id) = @_;
+    return("Information for card '$actual_card_id' was returned");
+}
+
+sub card_state_error {
+    my ($card_id, $card_state, $prober, $process_id) = @_;
+    if ($process_id) {
+        return("Error: '$process_id' can not run on '$prober' when Card '$card_id' is in '$card_state'");
+    } else {
+        return("Error: Card '$card_id' on '$prober' can not be used when it is in '$card_state'");
+    }
+}
+
+sub card_event_code_error {
+    my ($card_id, $prober, $process_id) = @_;
+    return("Error: '$process_id' can not run on '$prober' when Card '$card_id' has a 'stops production' event code attached");
+}
+
+sub no_wafers {
+    my ($lotId, @asset_type) = @_;
+    return("Error: no wafers of type '" . join (', ', @asset_type) . "' in Lot '$lotId'");
+}
+
+sub card_read_error {
+    my ($prober, $msg) = @_;
+    if ($msg) {
+        return("Error obtaining CardID for Prober '$prober': $msg");
+    } else {
+        return("Error obtaining CardID for Prober '$prober'.");
+    }
+}
+
+sub multiple_design_ids {
+    my (%design_ids) = @_;
+    my @formatted_list;
+    foreach $design (sort keys %design_ids) {
+        push @formatted_list, "$design (" . join (', ', @{$design_ids{$design}}) . ")";
+    }
+    return("Error: lots must have the same Design ID: " . join (', ', @formatted_list));
+}
+
+sub multiple_steps {
+    my (%step_names) = @_;
+    my @formatted_list;
+    foreach $step (sort keys %step_names) {
+        push @formatted_list, "'$step' (" . join (', ', @{$step_names{$step}}) . ")";
+    }
+    return("Error: lots must have the same Step: " . join (', ', @formatted_list));
+}
+
+sub stat_fail {
+    my ($path, $message) = @_;
+    return("Error: unable to obtain file/directory status for '$path': $message");
+}
+
+sub rmdir_fail {
+    my ($path, @message) = @_;
+    return("Error: failed to delete directory '$path': @message");
+}
+
+sub mkdir_fail {
+    my ($path, $message) = @_;
+    return("Error: failed to create directory '$path': $message");
+}
+
+sub chdir_fail {
+    my ($path, $message) = @_;
+    return("Error: could not change to directory '$path': $message");
+}
+
+sub unlink_fail {
+    my ($message, @files) = @_;
+    return("Error: failed to delete '@files': $message");
+}
+
+sub copy_fail {
+    my ($path, $destination, $message) = @_;
+    return("Error: failed to copy '$path' to '$destination': $message");
+}
+
+sub directory_access_fail {
+    my ($path, $message) = @_;
+    return("Error: failed reading '$path': $message");
+}
+
+sub file_open_fail {
+    my ($path, $mode, $message) = @_;
+    # $mode should be 'read' or 'write'
+    return("Error: failed to open '$path' for $mode access: $message");
+}
+
+sub job_not_available {
+    my ($job, $path, $local_path) = @_;
+    return("Error: Test Job '$job' not found on Release Server '$path' or in local dir '$local_path'");
+}
+
+sub no_matching_job_available {
+    my ($pattern, $path, $local_path) = @_;
+    return("Error: No Test Job matching '$pattern' found on Release Server '$path' or in local dir '$local_path'");
+}
+
+sub no_job_archive {
+    my ($pattern, $path) = @_;
+    return("Error: No Test Job matching '$pattern' found in directory '$path'");
+}
+
+sub parameter_required {
+    my ($parameter) = @_;
+    return("'$parameter' required");
+}
+
+sub parameter_format_error {
+    my ($parameter, $pattern) = @_;
+    return("'$parameter' not in the correct format '$pattern'");
+}
+
+sub move_table_not_available {
+    my ($step_table, $path, $local_path) = @_;
+    return("Error: Move Table '$step_table' not found on Release Server '$path' or in local dir '$local_path'");
+}
+
+sub format_name {
+    my ($given, $sur) = @_;
+    return("$given $sur");
+}
+
+sub format_date_time {
+    my ($epoch) = @_;
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($epoch);
+    return(sprintf("%d-%02d-%02d", $year+1900, $mon+1, $mday));
+}
+
+sub local_job_only {
+    my ($job) = @_;
+    return("Test Job '$job' not found on Release Server, continue with local copy?");
+}
+
+sub new_job_available {
+    my ($job, $epoch) = @_;
+    return("Update to Test Job '$job', released '" . format_date_time($epoch) . "'?");
+}
+
+sub step_table_available {
+    my ($step_table, $epoch) = @_;
+    return("Update to Move Table '$step_table', released '" . format_date_time($epoch) . "'?");
+}
+
+sub continue_with_scrapped_wafers {
+    my ($lotId) = @_;
+    return("Lot '$lotId' contains only Scrapped Wafers.  Continue?");
+}
+
+sub error_checking_equip_state {
+    my ($message) = @_;
+    return("Check current equipment state returned an error: $message");
+}
+
+sub error_reading_move_table {
+    my ($step_table, $line, $message) = @_;
+    if ($line) {
+        return("Error in move table '$step_table' at line $line: $message");
+    } else {
+        # it is likely that MTParser version is incompatible with this software
+        return("Error reading move table '$step_table': $message");
+    }
+}
+
+sub part_type_not_found {
+    my ($step_table, $part_type) = @_;
+    return("Part Type '$part_type' not found in move table '$step_table'");
+}
+
+sub card_config_not_found {
+    my ($step_table, $card_config, $part_type) = @_;
+    if ($part_type) {
+        return("Probe card config '$card_config' not found for Part Type '$part_type' in move table '$step_table'");
+    } else {
+        return("Probe card config '$card_config' not found in move table '$step_table'");
+    }
+}
+
+sub no_zip_utility {
+    my (@search_path) = @_;
+    return("No file decompression utility found in '" . join (', ', @search_path) . "'");
+}
+
+sub error_extracting_files {
+    my ($zip_archive, $destination_path, $message) = @_;
+    return("Unable to extract files from '$zip_archive' to '$destination_path': $message");
+}
+
+sub file_move_error {
+    my ($file, $destination_path, $message) = @_;
+    return("Failed to move '$file' to '$destination_path': $message");
+}
+
+sub part_not_compatible {
+    my ($part_type, $first_part, $equiv_parts) = @_;
+    return("Part '$part_type' is not compatible with '$first_part'.  Equivalent parts list = '$equiv_parts'");
+}
+
+sub job_not_compatible {
+    my ($current_job, $new_job) = @_;
+    return("Unable to setup job '$new_job' because '$current_job' is already loaded");
+}
+
+sub temperature_not_compatible {
+    my ($current_temperature, $new_temperature) = @_;
+    return("Unable to probe at ${new_temperature}°C because prober is currently set at ${current_temperature}°C");
+}
+
+sub temperature_not_available {
+    my ($process_step_description) = @_;
+    return("The temperature is unknown for the current process step ($process_step_description).\nContact the engineer for this product.");
+}
+
+sub process_not_compatible {
+    my ($current_process, $new_process) = @_;
+    return("Unable to run '$new_process' because prober is currently running '$current_process'");
+}
+
+sub lot_hold {
+    my ($lotId, $message) = @_;
+    return("Error: unable to start Lot '$lotId' when Tracking State is '$message'")
+}
+
+sub lot_not_tracked_in {
+    my ($lotId, $tracking_step) = @_;
+    return("Error: Lot '$lotId' must be Tracked Into '$tracking_step'")
+}
+
+sub lot_not_at_step {
+    my ($lotId, $step_or_location, $step_or_location_type) = @_;
+    return("Error: Lot '$lotId' must be ON PROCESS.  $step_or_location_type is currently '$step_or_location'")
+}
+
+sub wafer_id_slk_mismatch {
+    my ($lotId, %slk_mismatch) = @_;
+    my @formatted_list;
+    foreach my $start_lot (sort keys %slk_mismatch) {
+        push @formatted_list, "'$start_lot' (" . join (', ', @{$slk_mismatch{$start_lot}}) . ")";
+    }
+    return("Lot '$lotId' has incompatible 'Start Lot Keys' and (wafer IDs): " . join (', ', @formatted_list) . ".  Refer to 'UNMATCHED SLK Procedure'.");
+}
+
+sub bsc_error {
+    my ($lotId, $message) = @_;
+    return("Error obtaining information for Lot '$lotId' from MES Controller: $message");
+}
+
+sub bsc_equip_query_error {
+    my ($equipId, $message) = @_;
+    return("Error obtaining list of lots staged to '$equipId' from MES Controller: $message");
+}
+
+sub batch_state_error {
+    my ($lotId, $batchState, @allowedStates) = @_;
+    return("Lot '$lotId' Batch State is '$batchState', allowed state(s) for lot processing: '" . join (', ', @allowedStates) . "'")
+}
+
+sub lot_commit_error {
+    my ($lotId, $message, $batchState) = @_;
+    if ($batchState) {
+        return("Lot '$lotId' state can't be set to '$batchState': $message");
+    } else {
+        return("Lot '$lotId' can't be started: $message");
+    }
+}
+
+sub lot_not_staged {
+    my ($lotId, $prober) = @_;
+    return("Lot '$lotId' must be staged to '$prober'")
+}
+
+sub staged_lot_load_error {
+    my ($lotId, $placedProber, @stagedProbers) = @_;
+    return("Lot '$lotId' can't be started on '$placedProber' because it is staged to '" . join (', ', @stagedProbers) . "'")
+}
+
+sub override_staged_lot {
+    my ($lotId) = @_;
+    return("Over-ride not allowed, lot '$lotId' has been staged.")
+}
+
+sub probe_tracking_server_error {
+    my ($response) = @_;
+    return("Error returned from Probe Tracking Server: $response");
+}
+
+sub probe_process_definition_error {
+    my ($response, @trk_srvs) = @_;
+    return("Error obtaining Process Definition Data from Probe Tracking Server(s) '@trk_srvs' : $response");
+}
+
+sub card_not_compatible {
+    my ($lotId, $loaded_card_config, @acceptable_card_config) = @_;
+    return("Lot '$lotId' requires a probe card config of '" . join (' or ', @acceptable_card_config) . "'\nCurrently loaded card config is '$loaded_card_config'");
+}
+
+sub qcdm_selection_not_available {
+    my ($lotId, $wafer_criteria) = @_;
+    return("Error in GeRM Quick Carrier Definition - '$wafer_criteria' is not available in lot '$lotId'");
+}
+
+sub qcdm_duplicate_selection {
+    my ($lotId, $scribe) = @_;
+    return("Error in GeRM Quick Carrier Definition - '$scribe' from lot '$lotId' was selected multiple times");
+}
+
+sub qcdm_expression_error {
+    my ($expression) = @_;
+    return("Error in GeRM Quick Carrier Definition - '$expression' is not a valid expression");
+}
+
+sub qcdm_randomize_error {
+    my ($lotId, $count, $expression) = @_;
+    return("Error in GeRM Quick Carrier Definition - Randomization '$expression' requested, but only $count wafer(s) are in lot '$lotId'");
+}
+
+sub wafer_update_error {
+    my ($lotId, $message) = @_;
+    return("Error updating wafer state for lot '$lotId': $message");
+}
+
+sub germ_process_list_error {
+    my ($process_type, $response) = @_;
+    return("Error obtaining a list of '$process_type' processes: $response");
+}
+
+sub process_type_label {
+    my ($process_type) = @_;
+    # process_type should be:
+    # Archived, Deviation, NonProduct, Product, Qual, SubRecipe, VirtualCDM
+    return("$process_type Process");
+}
+
+sub mes_probe_tracking_carrier_mismatch {
+    my ($lotId, $scribe) = @_;
+    return("Carrier map mismatch for lot '$lotId' - MES Wafer Scribe '$scribe' not found in Probe Tracking.\nWafer moves may be required.");
+}
+
+sub no_wafers_selected {
+    my ($lotId, $process_id) = @_;
+    return("No wafers available to process in Lot '$lotId' for Probe Data Collection Process '$process_id'");
+}
+
+sub prober_must_be_idle {
+    my ($prober, $operation) = @_;
+    # currently the only operation anticipated is PROBE_CARD_READ
+    if ($operation =~ /PROBE_CARD_READ/i) {
+        return("Prober '$prober' must be paused to introduce a lot on the opposite head");
+    } else {
+        return("Prober '$prober' must be paused during '$operation'");
+    }
+}
+
+sub process_equip_state_error {
+    my ($prober, $process_id, $state) = @_;
+    return("Error: Can not run the '$process_id' Process when '$prober' is logged to '$state'");
+}
+
+sub continue_with_on_hold {
+    my ($lotId) = @_;
+    return("Lot '$lotId' is on Hold.  Continue?");
+}
+
+sub lot_comment_error {
+    my ($lotId, $message) = @_;
+    return("Error detected updating Lot Comment for Lot '$lotId': $message");
+}
+
+sub shrmem_head_active {
+    my ($head) = @_;
+    return("Head $head is active, unable to set shared memory\nShared Memory must be cleared before lot can be started.");
+}
+
+sub reprobe_error {
+    my ($lotId, $process_id, %process_state) = @_;
+    my %formatted_list;
+    foreach my $wafer_id (sort keys %process_state) {
+        push @{$formatted_list{$process_state{$wafer_id}{'PROCESS STATE'}}}, $wafer_id;
+    }
+    my $message;
+    foreach my $state (keys %formatted_list) {
+        $message .= " $state=(" . join (", ", @{$formatted_list{$state}}) . ")";
+    }
+    return("Reprobe is not allowed for Lot '$lotId'.  Wafer State(s) for PID '$process_id':$message");
+}
+
+# displayed to user in display_carrier dialog
+sub format_process_summary {
+    my ($lotId, $wafer_id, %process_summary) = @_;
+    my $formatted_summary = "$wafer_id:";
+    $formatted_summary .= " Job=$process_summary{'PROGRAM RAN'}" if $process_summary{'PROGRAM RAN'};
+    $formatted_summary .= " Rev=$process_summary{'PROGRAM REV ID'}" if $process_summary{'PROGRAM REV ID'};
+    $formatted_summary .= " UPass=$process_summary{'GOOD DIE COUNT'}" if $process_summary{'GOOD DIE COUNT'};
+    return($formatted_summary);
+}
+
+sub pct_sub_recipe_error {
+    my ($card_id, $message) = @_;
+    return("Error in PCT Cleaning Recipe for Card '$card_id': $message");
+}
+
+sub invalid_bond_pad_error {
+    my ($contam_type) = @_;
+    return("Contamination type '$contam_type' is not defined or is not valid in PCT.");
+}
+
+sub mixed_bond_pad_error {
+    my (%bond_pad_material) = @_;
+    my @formatted_list;
+    foreach $material (sort keys %bond_pad_material) {
+        push @formatted_list, "$material (" . join (', ', @{$bond_pad_material{$material}}) . ")";
+    }
+    return("Unable to simultaneously start lots with different Bond Pad material: " . join (', ', @formatted_list));
+}
+
+sub change_attribute_error {
+    my ($lotId, $message) = @_;
+    return("Error detected updating attributes for Lot '$lotId': $message");
+}
+
+sub testrev_not_compatible {
+    my ($lotId, $job, $previous_rev, $local_rev) = @_;
+    return("Mixed Revision probing is not allowed for Lot '$lotId'.  Job '$job' Local Revision '$local_rev' is not the same as previous Revision '$previous_rev'");
+}
+
+
+sub card_inclusion
+{
+    my ($equip_id,$card_id,$card_list)= @_;
+    return("Card: '$card_id' on '$equip_id' is not listed in card inclusion list: '$card_list'");
+    
+}
+
+
+sub card_exclusion
+{
+    my ($equip_id,$card_id,$card_list)= @_;
+    return("Card: '$card_id' on '$equip_id' is listed in card exclusion list: '$card_list'");
+    
+}
+
+
+1;  # return value for module
