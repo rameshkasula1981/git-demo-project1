@@ -1,2 +1,2 @@
 User-agent: *
-Disallow: /
+This is a test file checking in git
