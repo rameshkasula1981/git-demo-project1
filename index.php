@@ -23,8 +23,7 @@
 // This file is part of your app -- is not part of SIG Web Components.
 //
 // For global vars available, demos, and other SIG Web Components information,
-// see https://sigprism2/swc_demo/  Pull and push demo
-
+// see https://sigprism2/swc_demo/  Git Fetch and pull demo
 
 //-----------------------------------------------------------------------------
 // Let the user know why the app is not working if the required sig_web_components version is not installed.
