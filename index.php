@@ -23,7 +23,7 @@
 // This file is part of your app -- is not part of SIG Web Components.
 //
 // For global vars available, demos, and other SIG Web Components information,
-// see https://sigprism2/swc_demo/
+// see https://sigprism2/swc_demo/  Pull and push demo
 
 
 //-----------------------------------------------------------------------------
